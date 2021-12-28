@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lb9 | Url Shortener</title>
+    <meta name="theme-color" content="#070724" />
+    <meta name="author" content="lb9" />
+    <meta name="title" content="lb9 | Free URL Shortener" />
+    <meta
+      name="description"
+      content="100% free url shortener website to grow your business, company easily.  lb9 helps you to create unique and shareable link. It's helps to engage more people."
+    />
+    <meta
+      name="keywords"
+      content="link shortener, link, shortener, short, url, ecommerce, business, startup, free link shortener, 100% free, no pricing, full free url shortener"
+    />
+    <link rel="canonical" href="https://lb9.xyz/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="lb9 | Free URL Shortener" />
+    <meta
+      property="og:description"
+      content="100% free url shortener website to grow your business, company easily.  lb9 helps you to create unique and shareable link. It's helps to engage more people."
+    />
+    <meta property="og:image" content="img/og.png" />
+    <meta property="og:url" content="https://lb9.xyz/" />
+    <meta property="og:site_name" content="lb9" />
+    <!--<meta property="og:image:width" content="880" />-->
+    <!--<meta property="og:image:height" content="660" />-->
+    <meta name="twitter:domain" content="https://lb9.xyz/" />
+    <meta name="twitter:title" content="lb9 | Free URL Shortener" />
+    <meta
+      name="twitter:description"
+      content="100% free url shortener website to grow your business, company easily.  lb9 helps you to create unique and shareable link. It's helps to engage more people."/>
+    <meta name="twitter:image" content="img/og.png" />
+    <meta name="twitter:site" content="@lb9" />
+    <meta name="twitter:creator" content="@lb9" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="application-name" content="lb9" />
+    <meta name="apple-mobile-web-app-title" content="lb9" />
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@500&display=swap"
+      rel="stylesheet"/>
+    
+    <link rel="stylesheet" href="css/style.css" />
+    
+  </head>
+  <body>
+    <div class="ball ball1"></div>
+    <div class="ball ball2"></div>
+    <div class="wrapper">
+      <div class="wrap">
+        <div class="logo">
+          <a href="https://lebriact.com/" target="_blank"
+            ><img src="img/favicon.png" alt="logo"
+          /></a>
+        </div>
+        <div>
+          <a href="#">Other Projects</a>
+        </div>
+      </div>
+
+      <div class="list">
+        <p>ShortUrl list</p>
+
+        <ul id="list-items"></ul>
+      </div>
+
+      <div class="container">
+        <h1 class="title center fs6 wiggle">
+          Welcome to <br />
+          Url Shortener
+        </h1>
+        <div class="genUrl">
+          <form action="/" method="POST" id="form1">
+            <div>
+              <div class="input-cover">
+                <input
+                  type="url"
+                  name="fullUrl"
+                  required
+                  autofocus
+                  placeholder="Enter Full Url"
+                  class="closeInp"
+                />
+                <button class="closeBtn">
+                  <img src="img/close.png" alt="Close" />
+                </button>
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn">
+                <span> Short it </span>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="copyController">
+          <h1 class="title">Copy or goto url</h1>
+          <div>
+            <input
+              type="text"
+              name="copy"
+              value=""
+              id="copyTech"
+              placeholder="Short URL"
+              readonly
+            />
+          </div>
+          <button id="copyBtn" data-clipboard-target="#copyTech">Copy</button>
+          <button id="saveBtn">Save</button>
+          <a target="_blank" href="#">Go to</a>
+        </div>
+
+        <div class="urlInfo">
+          <h1 class="title center">Want to see url info</h1>
+
+          <form action="/shortUrl" method="POST" id="form2">
+            <div>
+              <input
+                type="url"
+                name="shortUrl"
+                placeholder="Enter Short Url"
+                required
+              />
+            </div>
+            <div><button type="submit">Submit</button></div>
+          </form>
+
+          <div class="showInf">
+            <h1 class="title">url info</h1>
+            <div class="allUrlInfo">
+              <div class="singleInfo">
+                <h3>Full Url:</h3>
+                <p>...</p>
+              </div>
+              <div class="singleInfo">
+                <h3>Short Url:</h3>
+                <p>...</p>
+              </div>
+              <div class="singleInfo">
+                <h3>Clicks in your short url:</h3>
+                <p>...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>develop by <a style="color: #ff7800" href="https://www.linkedin.com/in/yasin-arafath-80ab22207/" target="_blank">Yasin Arafath</a></p>
+      </footer>
+    </div>
+
+    <!-- copy url to clipboard -->
+    <script src="js/copytoclipboard.js"></script>
+    <script src="js/copyText.js"></script>
+
+    <!-- fetch data from server -->
+    <script>
+      let url = `<%= BASE_URL %>`;
+      let form1 = document.querySelector("#form1");
+      let form2 = document.querySelector("#form2");
+      let copyInputVal = document.querySelector(".copyController input");
+      let copyAncorVal = document.querySelector(".copyController a");
+      let showUrlinfo = document.querySelectorAll(".singleInfo");
+      let showInf = document.querySelector(".showInf");
+      async function dataFetcher(event) {
+
+        event.preventDefault();
+        let formData = new FormData(form1);
+
+        let response = await fetch(url, {
+          method: "POST",
+          body: formData,
+        });
+        let data = await response.json();
+
+        let urlval = data.payload;
+        copyInputVal.value =
+          urlval === undefined ? "" : `<%= BASE_URL %>${urlval}`;
+        copyAncorVal.setAttribute(
+          "href",
+          urlval === undefined ? "#" : `<%= BASE_URL %>${urlval}`
+        );
+        form1[0].value = "";
+        if (form1[0].value === "") {
+          closeBtn.style.display = "none";
+        }
+        alert("Link successfully generated!!!");
+            setTimeout(() => {
+            form1[2].style.pointerEvents = "unset";
+        }, 1000);
+      }
+            form1.addEventListener("submit", dataFetcher);
+
+  form1[2].addEventListener("click", function () {
+        var RegExp =
+          /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+        if (RegExp.test(form1[0].value)) {
+                   form1[2].style.pointerEvents = "none";
+
+        }
+      });
+
+      // ==================================================
+
+      async function dataFetcher2(event) {
+        event.preventDefault();
+        try {
+          let formData = new FormData(form2);
+
+          let response = await fetch(url + "shortUrl", {
+            method: "POST",
+            body: formData,
+          });
+          let data = await response.json();
+
+          let urlinfo = data.payload;
+          showUrlinfo[0].children[1].textContent =
+            urlinfo.fullUrl === undefined ? "..." : urlinfo.fullUrl;
+          showUrlinfo[1].children[1].textContent =
+            urlinfo.shortUrl === undefined
+              ? "..."
+              : `<%= BASE_URL %>${urlinfo.shortUrl}`;
+          showUrlinfo[2].children[1].textContent =
+            urlinfo.clicks === undefined ? "..." : urlinfo.clicks;
+
+          if (form2[0].value.length > 0) {
+            showInf.style.display = "block";
+          } else {
+            showInf.style.display = "none";
+          }
+          alert("Search found successfully!!!");
+
+        } catch (error) {
+          alert("Sorry! Link doesn't exist.");
+
+        }
+
+      }
+
+      form2.addEventListener("submit", dataFetcher2);
+    </script>
+
+    <!-- data saving to local storage  -->
+    <script src="js/localDataSave.js"></script>
+  </body>
+</html>
